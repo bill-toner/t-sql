@@ -1,9 +1,9 @@
---Min epicportallog Record: 2020-07-14 03:54:07.840
+--Min tb Record: 2020-07-14 03:54:07.840
 
 
 With DriveOrders as (
                     Select Convert(date, entrydatetime) as 'Date', Count(*) as 'DriveOrders'
-                    From DB.dbo.epicportallog (nolock)
+                    From DB.dbo.tb (nolock)
                     Where applicationname = 'TimerLog'
 						and Convert(decimal, Substring(message, 8, Datalength(message) - 7)) /1000 > 30
 						and Convert(Date, entrydatetime) > Convert(Date, DateAdd(week, -2, SysDateTime()))
@@ -12,7 +12,7 @@ With DriveOrders as (
                 ),
     Runtime as (
                     Select Round(Convert(decimal, Substring(message, 8, Datalength(message) - 7)) / 1000, 1) as 'Runtime', Convert(date, entrydatetime) as 'Date'
-                    From DB.dbo.epicportallog with(nolock)
+                    From DB.dbo.tb with(nolock)
                     Where applicationname = 'TimerLog'
 					    and Convert(Date, entrydatetime) > Convert(Date, DateAdd(week, -2, SysDateTime()))
 						and Convert(decimal, Substring(message, 8, Datalength(message) - 7)) /1000 > 30
