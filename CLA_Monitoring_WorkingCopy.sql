@@ -1,5 +1,3 @@
-Use IT_Operations;
-
 Select Convert(date, created) As 'Date', Count(*) As 'History'
 				Into #History
 				From Operations.CLA.tb_ReportServiceOrders_History (nolock)
