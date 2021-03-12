@@ -1,22 +1,22 @@
 With DU_in_progress as (Select Count(requestid) as [DU in Progress], GetUTCDate() as [Time]
-						From DestinyDB.dbo.loan_comrequest (nolock)
+						From DB.dbo.loan_comrequest (nolock)
 						Where serverid = 600 
 							and statusid < 5000
 							and Convert(Date, requestdate) = Convert(Date, GetDate())
 							),
 	DU_past_ten as (Select Count(*) As [DU Last 10 Minutes]
-					From DestinyDB.dbo.loan_comrequest (nolock)
+					From DB.dbo.loan_comrequest (nolock)
 					Where serverid = 600 --DU
 					  And requestdate >= DateAdd(mi, -10, Current_TimeStamp)
 	),
 	LPA_in_progress as (Select Count(requestid) as [LPA in Progress]
-						From DestinyDB.dbo.loan_comrequest (nolock)
+						From DB.dbo.loan_comrequest (nolock)
 						Where serverid = 340 
 							and statusid < 5000
 							and Convert(Date, requestdate) = Convert(Date, GetDate())
 	),
 	LPA_past_ten as (Select Count(*) As [LPA Last 10 Minutes]
-	From DestinyDB.dbo.loan_comrequest (nolock)
+	From DB.dbo.loan_comrequest (nolock)
 	Where serverid = 340 --LP
 	  And requestdate >= DateAdd(mi, -10, Current_TimeStamp)
 	)
