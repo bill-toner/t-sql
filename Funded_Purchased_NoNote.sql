@@ -1,13 +1,13 @@
 -- Get all loans that are funded or purchased
 Select Distinct loanid, loanrecordid
 Into #Funded_Purchased
-From DB.dbo.loan_main a (nolock)
+From DB.dbo.tb a (nolock)
 Where a.statusid in (54, 114);
 
 -- Get all loans that have notes
 Select loanrecordid_int
 Into #Loans_With_Notes
-From DB.dbo.v_XDocLoanDocuments (nolock)
+From DB.dbo.vw (nolock)
 Where DocTypeSchemaId = 201103;
 
 -- Get all loans that are funded or puchased and have notes
