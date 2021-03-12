@@ -1,11 +1,11 @@
 With LP5000 as (Select Convert(Date, requestdate) as [Date], Count(*) as 'LP in 5000'
-			From DestinyDB.dbo.loan_comrequest (nolock)
+			From DB.dbo.loan_comrequest (nolock)
 			Where serverid = 340 
 				and statusid = 5000
 				and Convert(Date, requestdate) >= Convert(Date, GetDate() - 30)
 			Group By Convert(Date, requestdate)),
 	LP6000 as (Select Convert(Date, requestdate) as [Date], Count(*) as 'LP in 6000'
-			From DestinyDB.dbo.loan_comrequest (nolock)
+			From DB.dbo.loan_comrequest (nolock)
 			Where serverid = 340 
 				and statusid = 6000
 				and Convert(Date, requestdate) >= Convert(Date, GetDate() - 30)
