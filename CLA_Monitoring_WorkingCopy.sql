@@ -1,27 +1,27 @@
 Select Convert(date, created) As 'Date', Count(*) As 'History'
 				Into #History
-				From Operations.CLA.tb_ReportServiceOrders_History (nolock)
+				From DB.CLA.tb (nolock)
 				Where Convert(Date, Created) > Convert(Date, DateAdd(month, -1, SysDateTime()))
 				Group By Convert(date, created), Datename(weekday, Created);
 			
 
 With Orders as (Select Datename(weekday, Created) As 'Day', Convert(date, Created) As 'Date', Count(*) As 'In Progress'
-				From Operations.cla.tb_ReportServiceOrders (nolock)
+				From DB.cla.tb (nolock)
 				Group By Convert(date, Created), Datename(Weekday, Created)
 				),
 	
 	Unprocessed as (Select Convert(date, created) as 'Date', Count(*) as 'Unprocessed'
-					From Operations.cla.tb_reportserviceorders (nolock)
+					From DB.cla.tb (nolock)
 					Where Status = 'READY'
 					Group By Convert(date, created)
 					),
 	Processed as (Select Convert(date, created) as 'Date', Count(*) as 'Processed'
-					From Operations.cla.tb_reportserviceorders (nolock)
+					From DB.cla.tb (nolock)
 					Where Status <> 'READY'
 					Group By Convert(date, created)),
 	Runtime as (
 					Select Convert(NVarchar, Created, 101) as 'Date', Datediff(Second, Created, Modified) As 'Runtime' 
-					From Operations.CLA.tb_ReportServiceOrders (nolock)
+					From DB.CLA.tb (nolock)
 					Where Status In ('Confirm', 'Reject', 'Deliver')
 					      --And Convert(NVarchar, Created, 8) >= '06:02:00'
 						  --And Convert(NVarchar, Created, 8) <= '11:59:59'
